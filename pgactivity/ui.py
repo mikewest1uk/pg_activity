@@ -177,7 +177,12 @@ def main(
                 tps = int(pg_db_info["tps"])
 
                 active_connections = data.pg_get_active_connections()
-                memory, swap, load = activities.mem_swap_load()
+                if options.nomem:
+                    memory = 0
+                    swap = 0
+                    load = 0
+                else:
+                    memory, swap, load = activities.mem_swap_load()
                 system_info = types.SystemInfo.default(
                     memory=memory, swap=swap, load=load
                 )
